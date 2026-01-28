@@ -1,8 +1,8 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { postService } from '../services/post.service';
 
 export class PostController {
-	getAllPosts = async (req: Request, res: Response) => {
+	getAllPosts = async (req: Request, res: Response, next: NextFunction) => {
 		const posts = await postService.getAll();
 		res.status(200).json({
 			success: true,
@@ -11,15 +11,15 @@ export class PostController {
 		});
 	};
 
-	getPostById = async (req: Request, res: Response) => {
-		const post = await postService.getById(req.params.id);
+	getPostById = async (req: Request, res: Response, next: NextFunction) => {
+		const post = await postService.getById(req.params.id as string);
 		res.status(200).json({
 			success: true,
 			data: post,
 		});
 	};
 
-	createPost = async (req: Request, res: Response) => {
+	createPost = async (req: Request, res: Response, next: NextFunction) => {
 		const post = await postService.create(req.body);
 		res.status(201).json({
 			success: true,
@@ -28,8 +28,8 @@ export class PostController {
 		});
 	};
 
-	updatePost = async (req: Request, res: Response) => {
-		const post = await postService.update(req.params.id, req.body);
+	updatePost = async (req: Request, res: Response, next: NextFunction) => {
+		const post = await postService.update(req.params.id as string, req.body);
 		res.status(200).json({
 			success: true,
 			message: 'Post updated successfully',
@@ -37,8 +37,8 @@ export class PostController {
 		});
 	};
 
-	deletePost = async (req: Request, res: Response) => {
-		await postService.delete(req.params.id);
+	deletePost = async (req: Request, res: Response, next: NextFunction) => {
+		await postService.delete(req.params.id as string);
 		res.status(200).json({
 			success: true,
 			message: 'Post deleted successfully',
