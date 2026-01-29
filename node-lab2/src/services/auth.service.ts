@@ -20,6 +20,8 @@ class AuthService {
       refreshToken,
     };
   };
+
+  login = async () => {};
 }
 
 export default new AuthService();
