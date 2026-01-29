@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DeveloperToolsToolWindowSettingsV1" lastSelectedContentNodeId="jwt-encoder-decoder" pluginVersion="7.1.0">
+    <developerToolsConfigurations>
+      <developerToolConfiguration developerToolId="jwt-encoder-decoder" id="32901a1e-0631-4b33-898c-2fc0c4d1f027" name="Workbench">
+        <properties>
+          <property key="headerText" type="INPUT" value="kotlin.String|{&#10;  &quot;alg&quot;: &quot;HS256&quot;,&#10;  &quot;typ&quot;: &quot;JWT&quot;&#10;}" />
+          <property key="payloadText" type="INPUT" value="kotlin.String|{&#10;  &quot;email&quot;: &quot;test1@email.com&quot;,&#10;  &quot;id&quot;: &quot;697bcdff150c3643b83f0fc1&quot;,&#10;  &quot;iat&quot;: 1769721344,&#10;  &quot;exp&quot;: 1769724944&#10;}" />
+          <property key="encodedText" type="INPUT" value="kotlin.String|eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxQGVtYWlsLmNvbSIsImlkIjoiNjk3YmNkZmYxNTBjMzY0M2I4M2YwZmMxIiwiaWF0IjoxNzY5NzIxMzQ0LCJleHAiOjE3Njk3MjQ5NDR9.f68-2sAWDz8MBWO9t6g20delLKnFKy5jH2tSlwhCy7A" />
+        </properties>
+      </developerToolConfiguration>
+    </developerToolsConfigurations>
+  </component>
+</project>
