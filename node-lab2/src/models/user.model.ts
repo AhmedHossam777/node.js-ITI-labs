@@ -1,5 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 import { IUserDocument, Role } from '../types/user.types';
+import bcrypt from 'bcrypt';
 
 const userSchema = new Schema<IUserDocument>(
 	{
@@ -34,5 +35,11 @@ const userSchema = new Schema<IUserDocument>(
 		timestamps: true,
 	},
 );
+
+userSchema.pre('save', async function (next) {
+	const salt = await bcrypt.genSalt(10);
+	this.password = await bcrypt.hash(this.password, salt);
+	next();
+});
 
 export const User = mongoose.model<IUserDocument>('User', userSchema);

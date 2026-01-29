@@ -42,7 +42,6 @@ export class UserService implements ICrudService<IUserDocument> {
 
 		const user = await User.findByIdAndUpdate(id, data, {
 			new: true,
-			runValidators: true,
 		});
 
 		if (!user) {

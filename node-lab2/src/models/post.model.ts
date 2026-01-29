@@ -33,10 +33,4 @@ const postSchema = new Schema<IPostDocument>(
 	},
 );
 
-// Populate author on find
-postSchema.pre(/^find/, function (next) {
-	(this as mongoose.Query<unknown, unknown>).populate('author', 'name email');
-	next();
-});
-
 export const Post = mongoose.model<IPostDocument>('Post', postSchema);
