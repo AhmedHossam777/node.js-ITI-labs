@@ -8,12 +8,13 @@ import {
   deleteUserSchema,
 } from "../validations/user.validation";
 import { authMiddleware } from "../middlewares/auth.middleware";
+import { roleMiddleware } from "../middlewares/role.middleware";
 
 const router = Router();
 
 router
   .route("/")
-  .get(authMiddleware, userController.getAllUsers)
+  .get(authMiddleware, roleMiddleware("admin"), userController.getAllUsers)
   .post(validate(createUserSchema), userController.createUser);
 
 router
