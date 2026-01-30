@@ -52,6 +52,18 @@ class AuthService {
       refreshToken,
     };
   };
+
+  refresh = (refreshToken: string) => {
+    const payload = jwtService.verifyRefreshToken(refreshToken);
+
+    const newAccessToken = jwtService.generateAccessToken({
+      email: payload.email,
+      id: payload.id,
+      role: payload.role,
+    });
+
+    return newAccessToken;
+  };
 }
 
 export default new AuthService();
