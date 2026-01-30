@@ -13,6 +13,19 @@ class AuthController {
       refreshToken,
     });
   };
+
+  login = async (req: Request, res: Response, next: NextFunction) => {
+    const { existUser, accessToken, refreshToken } = await authService.login(
+      req.body,
+    );
+
+    res.status(200).json({
+      success: true,
+      existUser,
+      accessToken,
+      refreshToken,
+    });
+  };
 }
 
 export default new AuthController();

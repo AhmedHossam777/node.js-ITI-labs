@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { Payload } from "../types/jwt.types";
+import { Payload } from "../types/auth.types";
 import { env } from "../config/env";
 
 class JwtService {
