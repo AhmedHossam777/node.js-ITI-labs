@@ -3,6 +3,7 @@ import { User } from "../models/user.model";
 import { ICrudService } from "../types/crud.interface";
 import { IPostDocument } from "../types/post.types";
 import { CustomError } from "../utils/customError";
+import mongoose from "mongoose";
 
 export class PostService implements ICrudService<IPostDocument> {
   async getAll(): Promise<IPostDocument[]> {
@@ -18,13 +19,6 @@ export class PostService implements ICrudService<IPostDocument> {
   }
 
   async create(data: Partial<IPostDocument>): Promise<IPostDocument> {
-    if (data.author) {
-      const user = await User.findById(data.author);
-      if (!user) {
-        throw new CustomError("Author not found", 404);
-      }
-    }
-
     return await Post.create(data);
   }
 

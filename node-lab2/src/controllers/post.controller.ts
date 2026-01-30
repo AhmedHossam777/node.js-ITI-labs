@@ -20,6 +20,7 @@ export class PostController {
   };
 
   createPost = async (req: Request, res: Response, next: NextFunction) => {
+    req.body.author = req.user?.id;
     const post = await postService.create(req.body);
     res.status(201).json({
       success: true,
