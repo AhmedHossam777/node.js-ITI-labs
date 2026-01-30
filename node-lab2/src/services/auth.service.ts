@@ -10,10 +10,12 @@ class AuthService {
     const accessToken = jwtService.generateAccessToken({
       email: user.email,
       id: user._id.toString(),
+      role: user.role,
     });
     const refreshToken = jwtService.generateRefreshToken({
       email: user.email,
       id: user._id.toString(),
+      role: user.role,
     });
 
     return {
@@ -36,10 +38,12 @@ class AuthService {
     const accessToken = jwtService.generateAccessToken({
       email: existUser.email,
       id: existUser._id.toString(),
+      role: existUser.role,
     });
     const refreshToken = jwtService.generateRefreshToken({
       email: existUser.email,
       id: existUser._id.toString(),
+      role: existUser.role,
     });
 
     return {

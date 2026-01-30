@@ -5,7 +5,7 @@ import { CustomError } from "../utils/customError";
 
 export class UserService implements ICrudService<IUserDocument> {
   async getAll(): Promise<IUserDocument[]> {
-    return await User.find().sort({ createdAt: -1 });
+    return User.find().sort({ createdAt: -1 });
   }
 
   async getById(id: string): Promise<IUserDocument> {
