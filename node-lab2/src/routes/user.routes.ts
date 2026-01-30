@@ -20,7 +20,17 @@ router
 router
   .route("/:id")
   .get(validate(getUserSchema), userController.getUserById)
-  .patch(validate(updateUserSchema), userController.updateUser)
-  .delete(validate(deleteUserSchema), userController.deleteUser);
+  .patch(
+    authMiddleware,
+    roleMiddleware("admin"),
+    validate(updateUserSchema),
+    userController.updateUser,
+  )
+  .delete(
+    authMiddleware,
+    roleMiddleware("admin"),
+    validate(deleteUserSchema),
+    userController.deleteUser,
+  );
 
 export default router;
