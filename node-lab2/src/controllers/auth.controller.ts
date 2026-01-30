@@ -28,10 +28,13 @@ class AuthController {
   };
 
   refreshToken = async (req: Request, res: Response, next: NextFunction) => {
-    const accessToken = authService.refresh(req.body.refreshToken);
+    const { accessToken, refreshToken } = authService.refresh(
+      req.body.refreshToken,
+    );
     res.status(200).json({
       success: true,
       accessToken,
+      refreshToken, // Return new refresh token (token rotation)
     });
   };
 }

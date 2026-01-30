@@ -56,13 +56,23 @@ class AuthService {
   refresh = (refreshToken: string) => {
     const payload = jwtService.verifyRefreshToken(refreshToken);
 
+    // Generate both new access token AND new refresh token (token rotation)
     const newAccessToken = jwtService.generateAccessToken({
       email: payload.email,
       id: payload.id,
       role: payload.role,
     });
 
-    return newAccessToken;
+    const newRefreshToken = jwtService.generateRefreshToken({
+      email: payload.email,
+      id: payload.id,
+      role: payload.role,
+    });
+
+    return {
+      accessToken: newAccessToken,
+      refreshToken: newRefreshToken,
+    };
   };
 }
 

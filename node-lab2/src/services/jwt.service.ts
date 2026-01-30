@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { Payload } from "../types/auth.types";
 import { env } from "../config/env";
+import { CustomError } from "../utils/customError";
 
 class JwtService {
   generateAccessToken = (payload: Payload): string => {
@@ -9,7 +10,10 @@ class JwtService {
         expiresIn: env.ACCESS_TOKEN.lifetime,
       });
     } catch (error: any) {
-      throw new Error(`Failed to generate access token: ${error.message}`);
+      throw new CustomError(
+        `Failed to generate access token: ${error.message}`,
+        500,
+      );
     }
   };
 
@@ -19,7 +23,10 @@ class JwtService {
         expiresIn: env.REFRESH_TOKEN.lifetime,
       });
     } catch (error: any) {
-      throw new Error(`Failed to generate refresh token: ${error.message}`);
+      throw new CustomError(
+        `Failed to generate refresh token: ${error.message}`,
+        500,
+      );
     }
   };
 
@@ -27,7 +34,16 @@ class JwtService {
     try {
       return jwt.verify(token, env.ACCESS_TOKEN.secret) as Payload;
     } catch (error: any) {
-      throw new Error(`Failed to verify access token: ${error.message}`);
+      if (error.name === "TokenExpiredError") {
+        throw new CustomError("Access token has expired", 401);
+      }
+      if (error.name === "JsonWebTokenError") {
+        throw new CustomError("Invalid access token", 401);
+      }
+      throw new CustomError(
+        `Failed to verify access token: ${error.message}`,
+        401,
+      );
     }
   };
 
@@ -35,7 +51,16 @@ class JwtService {
     try {
       return jwt.verify(token, env.REFRESH_TOKEN.secret) as Payload;
     } catch (error: any) {
-      throw new Error(`Failed to verify refresh token: ${error.message}`);
+      if (error.name === "TokenExpiredError") {
+        throw new CustomError("Refresh token has expired", 401);
+      }
+      if (error.name === "JsonWebTokenError") {
+        throw new CustomError("Invalid refresh token", 401);
+      }
+      throw new CustomError(
+        `Failed to verify refresh token: ${error.message}`,
+        401,
+      );
     }
   };
 }
