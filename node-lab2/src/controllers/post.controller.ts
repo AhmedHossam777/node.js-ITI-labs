@@ -30,7 +30,11 @@ export class PostController {
   };
 
   updatePost = async (req: Request, res: Response, next: NextFunction) => {
-    const post = await postService.update(req.params.id as string, req.body);
+    const post = await postService.update(
+      req.params.id as string,
+      req.body,
+      req.user?.id as string,
+    );
     res.status(200).json({
       success: true,
       message: "Post updated successfully",
@@ -39,7 +43,7 @@ export class PostController {
   };
 
   deletePost = async (req: Request, res: Response, next: NextFunction) => {
-    await postService.delete(req.params.id as string);
+    await postService.delete(req.params.id as string, req.user?.id as string);
     res.status(200).json({
       success: true,
       message: "Post deleted successfully",

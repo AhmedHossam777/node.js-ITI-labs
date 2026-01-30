@@ -19,7 +19,7 @@ router
 router
   .route("/:id")
   .get(authMiddleware, validate(getPostSchema), postController.getPostById)
-  .put(authMiddleware, validate(updatePostSchema), postController.updatePost)
+  .patch(authMiddleware, validate(updatePostSchema), postController.updatePost)
   .delete(
     authMiddleware,
     validate(deletePostSchema),

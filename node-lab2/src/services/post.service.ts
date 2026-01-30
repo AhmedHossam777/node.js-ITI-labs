@@ -1,9 +1,7 @@
 import { Post } from "../models/post.model";
-import { User } from "../models/user.model";
 import { ICrudService } from "../types/crud.interface";
 import { IPostDocument } from "../types/post.types";
 import { CustomError } from "../utils/customError";
-import mongoose from "mongoose";
 
 export class PostService implements ICrudService<IPostDocument> {
   async getAll(): Promise<IPostDocument[]> {
@@ -25,17 +23,15 @@ export class PostService implements ICrudService<IPostDocument> {
   async update(
     id: string,
     data: Partial<IPostDocument>,
+    ownerId: string,
   ): Promise<IPostDocument> {
-    if (data.author) {
-      const user = await User.findById(data.author);
-      if (!user) {
-        throw new CustomError("Author not found", 404);
-      }
-    }
-
-    const post = await Post.findByIdAndUpdate(id, data, {
-      new: true,
-    });
+    const post = await Post.findOneAndUpdate(
+      { _id: id, author: ownerId },
+      data,
+      {
+        new: true,
+      },
+    );
 
     if (!post) {
       throw new CustomError("Post not found", 404);
@@ -44,8 +40,8 @@ export class PostService implements ICrudService<IPostDocument> {
     return post;
   }
 
-  async delete(id: string): Promise<void> {
-    const post = await Post.findByIdAndDelete(id);
+  async delete(id: string, ownerId: string): Promise<void> {
+    const post = await Post.findOneAndDelete({ _id: id, author: ownerId });
     if (!post) {
       throw new CustomError("Post not found", 404);
     }
